@@ -260,7 +260,21 @@
             border-radius: 10px;
         }
         @keyframes confetti-fall {
-            to { transform: translateY(100vh) rotate(360deg); }
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Styles for interactive list items */
+        .interactive-list-item {
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        .interactive-list-item:hover {
+            background-color: #e6ffe6; /* Light green on hover */
+        }
+        .interactive-list-item.active {
+            background-color: #d4edda; /* Slightly darker green when active */
+            transform: scale(1.01);
         }
     </style>
 </head>
@@ -288,13 +302,13 @@
             <h2>How the Pancreas Helps Your Tummy</h2>
             <p>When you eat yummy food like pizza or fruit, here's what your pancreas does:</p>
             
-            <ol>
-                <li>The pancreas makes special digestive <span class="highlight">"juices"</span> full of tiny helpers called enzymes.</li>
-                <li>These juices travel through a tiny tube into your small intestine.</li>
-                <li>The enzymes break down food into super small pieces so your body can use all the good stuff.</li>
-                <li>Carbohydrates (like bread) get broken into sugar for energy.</li>
-                <li>Proteins (like chicken) get broken into building blocks for your muscles.</li>
-                <li>Fats (like butter) get broken down so your body can use them too.</li>
+            <ol id="pancreas-actions-list">
+                <li class="interactive-list-item">The pancreas makes special digestive <span class="highlight">"juices"</span> full of tiny helpers called enzymes.</li>
+                <li class="interactive-list-item">These juices travel through a tiny tube into your small intestine.</li>
+                <li class="interactive-list-item">The enzymes break down food into super small pieces so your body can use all the good stuff.</li>
+                <li class="interactive-list-item">Carbohydrates (like bread) get broken into sugar for energy.</li>
+                <li class="interactive-list-item">Proteins (like chicken) get broken into building blocks for your muscles.</li>
+                <li class="interactive-list-item">Fats (like butter) get broken down so your body can use them too.</li>
             </ol>
             
             <div class="digestive-animation" id="digestiveAnimation">
@@ -336,7 +350,7 @@
         <script>
             function celebrate() {
                 const colors = ['#FF5252', '#FF4081', '#E040FB', '#7C4DFF', '#536DFE', '#448AFF', '#40C4FF', '#18FFFF', '#64FFDA', '#69F0AE', '#B2FF59', '#EEFF41', '#FFFF00', '#FFD740', '#FFAB40', '#FF6E40'];
-                const container = document.querySelector('.pancreas-info');
+                const container = document.querySelector('.pancreas-info'); // Target the pancreas-info div for confetti
                 
                 for (let i = 0; i < 30; i++) {
                     const confetti = document.createElement('div');
@@ -346,14 +360,15 @@
                     confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
                     confetti.style.borderRadius = '50%';
                     confetti.style.left = Math.random() * 100 + '%';
-                    confetti.style.top = '-20px';
+                    confetti.style.top = '-20px'; // Start above the container
                     confetti.style.animation = `confetti-fall ${Math.random() * 2 + 1}s linear forwards`;
                     
                     container.appendChild(confetti);
                     
+                    // Remove confetti after animation to clean up DOM
                     setTimeout(() => {
                         confetti.remove();
-                    }, 3000);
+                    }, (Math.random() * 2 + 1) * 1000); // Match timeout to animation duration
                 }
             }
         </script>
@@ -427,15 +442,19 @@
             
             // Pancreas click interaction
             pancreasIcon.addEventListener('click', function() {
-                const juices = [];
-                
                 // Create burst of juice bubbles
                 for (let i = 0; i < 15; i++) {
                     setTimeout(() => {
                         const juice = document.createElement('div');
                         juice.className = 'juice';
-                        juice.style.left = (Math.random() * 30 + 40) + '%';
-                        juice.style.bottom = '80px';
+                        // Position juice relative to the pancreas icon
+                        const pancreasRect = pancreasIcon.getBoundingClientRect();
+                        const animationRect = digestiveAnimation.getBoundingClientRect();
+                        
+                        // Calculate position relative to the digestiveAnimation container
+                        juice.style.left = (pancreasRect.left - animationRect.left + pancreasRect.width / 2 + (Math.random() * 40 - 20)) + 'px';
+                        juice.style.top = (pancreasRect.top - animationRect.top + pancreasRect.height / 2 + (Math.random() * 40 - 20)) + 'px';
+                        
                         digestiveAnimation.appendChild(juice);
                         
                         let size = 10 + Math.random() * 20;
@@ -448,7 +467,8 @@
                             juice.style.opacity = opacity;
                             juice.style.width = size + 'px';
                             juice.style.height = size + 'px';
-                            juice.style.transform = `rotate(${size * 2}deg) translateY(-${size}px)`;
+                            // Make juice move slightly upwards and fade out
+                            juice.style.transform = `translateY(-${size * 0.5}px) scale(${size/20})`;
                             
                             if (opacity >= 0.8 || size >= 40) {
                                 clearInterval(growJuice);
@@ -457,10 +477,27 @@
                                 }, 500);
                             }
                         }, 50);
-                        juices.push(juice);
-                    }, i * 100);
+                    }, i * 50); // Stagger the appearance of juice bubbles
                 }
             });
+
+            // Interactive list items for "How the Pancreas Helps Your Tummy"
+            const pancreasActionsList = document.getElementById('pancreas-actions-list');
+            if (pancreasActionsList) {
+                pancreasActionsList.addEventListener('click', function(event) {
+                    const target = event.target.closest('.interactive-list-item');
+                    if (target) {
+                        // Remove 'active' class from all other list items
+                        Array.from(pancreasActionsList.children).forEach(item => {
+                            if (item !== target) {
+                                item.classList.remove('active');
+                            }
+                        });
+                        // Toggle 'active' class on the clicked item
+                        target.classList.toggle('active');
+                    }
+                });
+            }
         });
     </script>
 </body>
