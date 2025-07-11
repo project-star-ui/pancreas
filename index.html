@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Your Amazing Pancreas!</title>
+    <style>
+        body {
+            font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f0f9ff;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            p, li {
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+            .container {
+                padding: 10px;
+            }
+            .pancreas-info {
+                padding: 15px;
+            }
+        }
+        
+        header {
+            background-color: #4CAF50;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            border-bottom: 5px dotted #FFD700;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .pancreas-info {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .pancreas-image {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .pancreas-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            border: 3px solid #4CAF50;
+        }
+        
+        h2 {
+            color: #4CAF50;
+            font-size: 1.8rem;
+            border-bottom: 2px dashed #FFD700;
+            padding-bottom: 10px;
+        }
+        
+        p, li {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .fun-facts {
+            background-color: #FFF9C4;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .fact-title {
+            font-weight: bold;
+            color: #FF9800;
+        }
+        
+        .digestive-animation {
+            width: 100%;
+            height: 250px;
+            background-color: #E1F5FE;
+            border-radius: 10px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+            background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1a79eabc-26ac-48b4-b455-dd4522156a31.png');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .food {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            top: 30px;
+            left: 20px;
+            animation: moveFood 10s infinite linear;
+            background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d289d5c1-1764-493a-987f-0c6cead3a9db.png');
+            background-size: contain;
+            z-index: 2;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+        }
+        
+        .pancreas-icon {
+            position: absolute;
+            width: 80px;
+            height: 60px;
+            bottom: 50px;
+            right: 20%;
+            background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fdb1cdad-780b-4402-9b74-245f9efd586a.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: 1;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+        }
+        
+        .juice {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #FFF59D;
+            border-radius: 50%;
+            opacity: 0;
+        }
+        
+        @keyframes moveFood {
+            0% { left: 20px; transform: scale(1); }
+            25% { left: 25%; transform: scale(0.9); }
+            50% { left: 50%; transform: scale(0.8); }
+            75% { left: 75%; transform: scale(0.7); }
+            100% { left: 90%; transform: scale(0.6); }
+        }
+        
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 30px;
+        }
+        
+        .highlight {
+            background-color: #FFF9C4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌈 Meet Your Amazing Pancreas! 🌈</h1>
+    </header>
+    
+    <div class="container">
+        <div class="pancreas-info">
+            <div class="pancreas-image">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/19bd9c22-5d50-4b6b-8f17-89aa4063bba7.png" alt="Colorful illustration of the digestive system with the pancreas highlighted in pink - a fish-shaped organ hiding behind the stomach">
+            </div>
+            
+            <h2>What is the Pancreas?</h2>
+            <p>Your <span class="highlight">pancreas</span> is a special helper in your body, shaped like a fish and hiding behind your stomach. It's about the size of your hand when you make a fist!</p>
+            
+            <p>Even though you can't see it or feel it working, your pancreas is always busy helping you digest your food and keep your body healthy.</p>
+            
+            <div class="fun-facts">
+                <p class="fact-title">Did You Know?</p>
+                <p>The pancreas is both a chef and a mail carrier! It makes special juices to help digest food (chef) and sends important messages to control your blood sugar (mail carrier).</p>
+            </div>
+            
+            <h2>How the Pancreas Helps Your Tummy</h2>
+            <p>When you eat yummy food like pizza or fruit, here's what your pancreas does:</p>
+            
+            <ol>
+                <li>The pancreas makes special digestive <span class="highlight">"juices"</span> full of tiny helpers called enzymes.</li>
+                <li>These juices travel through a tiny tube into your small intestine.</li>
+                <li>The enzymes break down food into super small pieces so your body can use all the good stuff.</li>
+                <li>Carbohydrates (like bread) get broken into sugar for energy.</li>
+                <li>Proteins (like chicken) get broken into building blocks for your muscles.</li>
+                <li>Fats (like butter) get broken down so your body can use them too.</li>
+            </ol>
+            
+            <div class="digestive-animation">
+                <div class="food"></div>
+                <div class="pancreas-icon"></div>
+                <div class="animation-label" style="position:absolute; bottom:10px; left:10px; font-size:12px; color:#333; background:rgba(255,255,255,0.7); padding:2px 5px; border-radius:3px;">
+                    Food moving through digestive system
+                </div>
+                <div class="animation-label" style="position:absolute; bottom:120px; right:20%; font-size:12px; color:#333; background:rgba(255,255,255,0.7); padding:2px 5px; border-radius:3px;">
+                    Pancreas sending digestive juices
+                </div>
+            </div>
+            
+            <h2>The Pancreas Superpower</h2>
+            <p>The pancreas has another important job - it helps control your blood sugar!</p>
+            
+            <p>It makes <span class="highlight">insulin</span>, which is like a key that lets sugar from your food enter your body's cells to give you energy. Without insulin, the sugar would just stay in your blood.</p>
+            
+            <div class="fun-facts">
+                <p class="fact-title">Body Fact:</p>
+                <p>The pancreas makes just the right amount of insulin you need - not too much and not too little! It's like having a perfect sugar helper inside you.</p>
+            </div>
+            
+            <h2>How to Keep Your Pancreas Happy</h2>
+            <p>Here are some ways to take care of your pancreas:</p>
+            
+            <ul>
+                <li>Eat colorful fruits and vegetables</li>
+                <li>Drink plenty of water</li>
+                <li>Get exercise every day</li>
+                <li>Don't eat too much sugar</li>
+                <li>Get enough sleep</li>
+            </ul>
+            
+            <p>Remember, your pancreas works hard every day to keep you healthy, so it's important to treat it well!</p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2023 The Body Adventure Club | Made with ❤️ for curious kids!</p>
+    </footer>
+    
+    <script>
+        // Simple animation for digestive process
+        document.addEventListener('DOMContentLoaded', function() {
+            const digestiveAnimation = document.querySelector('.digestive-animation');
+            
+            function createJuice() {
+                const juice = document.createElement('div');
+                juice.className = 'juice';
+                juice.style.left = (Math.random() * 50 + 20) + '%';
+                juice.style.bottom = '50px';
+                juice.style.backgroundImage = "url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/de1c1e4a-7628-401b-873e-6a2a79cab4d1.png')";
+                juice.style.backgroundColor = "transparent";
+                
+                digestiveAnimation.appendChild(juice);
+                
+                let size = 10;
+                let opacity = 0;
+                
+                const growJuice = setInterval(() => {
+                    opacity += 0.02;
+                    size += 1;
+                    
+                    juice.style.opacity = opacity;
+                    juice.style.width = size + 'px';
+                    juice.style.height = size + 'px';
+                    juice.style.transform = `rotate(${size * 15}deg)`;
+                    
+                    if (opacity >= 0.8 || size >= 30) {
+                        clearInterval(growJuice);
+                        setTimeout(() => {
+                            juice.remove();
+                        }, 300);
+                    }
+                }, 50);
+            }
+            
+            setInterval(createJuice, 2500);
+        });
+    </script>
+</body>
+</html>
