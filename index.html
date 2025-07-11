@@ -98,50 +98,73 @@
         
         .digestive-animation {
             width: 100%;
-            height: 250px;
+            height: 300px;
             background-color: #E1F5FE;
             border-radius: 10px;
             margin: 20px 0;
             position: relative;
             overflow: hidden;
-            background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1a79eabc-26ac-48b4-b455-dd4522156a31.png');
+            background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b5ad5427-5ced-4ffb-85b7-073424ba72a2.png');
             background-size: cover;
             background-position: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .digestive-animation:hover {
+            transform: scale(1.02);
         }
         
         .food {
             position: absolute;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             top: 30px;
             left: 20px;
-            animation: moveFood 10s infinite linear;
-            background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d289d5c1-1764-493a-987f-0c6cead3a9db.png');
+            animation: moveFood 8s infinite linear, bounce 0.5s infinite alternate;
+            background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b422ad50-7919-410c-8c02-5907d9e48dc3.png');
             background-size: contain;
             z-index: 2;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+            transition: all 0.3s;
+            cursor: grab;
+        }
+        .food:active {
+            cursor: grabbing;
+            transform: scale(1.1);
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
         }
         
         .pancreas-icon {
             position: absolute;
-            width: 80px;
-            height: 60px;
-            bottom: 50px;
-            right: 20%;
-            background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fdb1cdad-780b-4402-9b74-245f9efd586a.png');
+            width: 100px;
+            height: 80px;
+            bottom: 40px;
+            right: 15%;
+            background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/33d6dc0c-98d1-4ff7-bb21-72d8f427a5d5.png');
             background-size: contain;
             background-repeat: no-repeat;
             z-index: 1;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+            animation: pulse 2s infinite;
+            cursor: pointer;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
         
         .juice {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: #FFF59D;
-            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+            background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1b2105b9-1a8b-4fca-ab09-4f2d8854ae66.png');
+            background-size: contain;
             opacity: 0;
+            border-radius: 50%;
         }
         
         @keyframes moveFood {
@@ -175,7 +198,7 @@
     <div class="container">
         <div class="pancreas-info">
             <div class="pancreas-image">
-                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/19bd9c22-5d50-4b6b-8f17-89aa4063bba7.png" alt="Colorful illustration of the digestive system with the pancreas highlighted in pink - a fish-shaped organ hiding behind the stomach">
+                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e98afcde-e177-4175-b5da-2b1e1d0a371b.png" alt="Cute cartoon pancreas shaped like a smiling fish behind a stomach">
             </div>
             
             <h2>What is the Pancreas?</h2>
@@ -200,14 +223,14 @@
                 <li>Fats (like butter) get broken down so your body can use them too.</li>
             </ol>
             
-            <div class="digestive-animation">
-                <div class="food"></div>
-                <div class="pancreas-icon"></div>
+            <div class="digestive-animation" id="digestiveAnimation">
+                <div class="food" id="foodItem"></div>
+                <div class="pancreas-icon" id="pancreasIcon"></div>
                 <div class="animation-label" style="position:absolute; bottom:10px; left:10px; font-size:12px; color:#333; background:rgba(255,255,255,0.7); padding:2px 5px; border-radius:3px;">
-                    Food moving through digestive system
+                    Click and drag the food!
                 </div>
                 <div class="animation-label" style="position:absolute; bottom:120px; right:20%; font-size:12px; color:#333; background:rgba(255,255,255,0.7); padding:2px 5px; border-radius:3px;">
-                    Pancreas sending digestive juices
+                    Click me to see juices!
                 </div>
             </div>
             
@@ -237,46 +260,75 @@
     </div>
     
     <footer>
-        <p>© 2025 The Body Adventure Club | Made with ❤️ for curious kids!</p>
+        <p>© 2023 The Body Adventure Club | Made with ❤️ for curious kids!</p>
     </footer>
     
     <script>
-        // Simple animation for digestive process
+        // Interactive animation for digestive process
         document.addEventListener('DOMContentLoaded', function() {
-            const digestiveAnimation = document.querySelector('.digestive-animation');
+            const digestiveAnimation = document.getElementById('digestiveAnimation');
+            const foodItem = document.getElementById('foodItem');
+            const pancreasIcon = document.getElementById('pancreasIcon');
             
-            function createJuice() {
-                const juice = document.createElement('div');
-                juice.className = 'juice';
-                juice.style.left = (Math.random() * 50 + 20) + '%';
-                juice.style.bottom = '50px';
-                juice.style.backgroundImage = "url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/de1c1e4a-7628-401b-873e-6a2a79cab4d1.png')";
-                juice.style.backgroundColor = "transparent";
-                
-                digestiveAnimation.appendChild(juice);
-                
-                let size = 10;
-                let opacity = 0;
-                
-                const growJuice = setInterval(() => {
-                    opacity += 0.02;
-                    size += 1;
-                    
-                    juice.style.opacity = opacity;
-                    juice.style.width = size + 'px';
-                    juice.style.height = size + 'px';
-                    juice.style.transform = `rotate(${size * 15}deg)`;
-                    
-                    if (opacity >= 0.8 || size >= 30) {
-                        clearInterval(growJuice);
-                        setTimeout(() => {
-                            juice.remove();
-                        }, 300);
+            // Make food draggable
+            let isDragging = false;
+            
+            foodItem.addEventListener('mousedown', () => {
+                isDragging = true;
+                foodItem.style.animationPlayState = 'paused';
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    const rect = digestiveAnimation.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    if (x > 20 && x < rect.width - 50) {
+                        foodItem.style.left = (x - 30) + 'px';
                     }
-                }, 50);
-            }
+                }
+            });
             
-            setInterval(createJuice, 2500);
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                foodItem.style.animationPlayState = 'running';
+            });
+            
+            // Pancreas click interaction
+            pancreasIcon.addEventListener('click', function() {
+                const juices = [];
+                
+                // Create burst of juice bubbles
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => {
+                        const juice = document.createElement('div');
+                        juice.className = 'juice';
+                        juice.style.left = (Math.random() * 30 + 40) + '%';
+                        juice.style.bottom = '80px';
+                        digestiveAnimation.appendChild(juice);
+                        
+                        let size = 10 + Math.random() * 20;
+                        let opacity = 0;
+                        
+                        const growJuice = setInterval(() => {
+                            opacity += 0.05;
+                            size += 1;
+                            
+                            juice.style.opacity = opacity;
+                            juice.style.width = size + 'px';
+                            juice.style.height = size + 'px';
+                            juice.style.transform = `rotate(${size * 2}deg) translateY(-${size}px)`;
+                            
+                            if (opacity >= 0.8 || size >= 40) {
+                                clearInterval(growJuice);
+                                setTimeout(() => {
+                                    juice.remove();
+                                }, 500);
+                            }
+                        }, 50);
+                        juices.push(juice);
+                    }, i * 100);
+                }
+            });
         });
     </script>
 </body>
