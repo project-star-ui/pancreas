@@ -6,7 +6,7 @@
     <title>Meet Your Amazing Pancreas!</title>
     <style>
         body {
-            font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
+            font-family: 'Arial', sans-serif; /* Changed font to Arial for better readability */
             background-color: #f0f9ff;
             margin: 0;
             padding: 0;
@@ -216,6 +216,52 @@
             padding: 2px 5px;
             border-radius: 3px;
         }
+
+        /* Fix for animation labels */
+        .animation-label {
+            background: rgba(255,255,255,0.9); /* Ensure background is opaque */
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #333;
+            position: absolute; /* Ensure positioning */
+        }
+
+        @keyframes wiggle {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            50% { transform: rotate(-5deg); }
+            75% { transform: rotate(3deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .happy-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-family: inherit;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .happy-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .fun-reminder {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: #E8F5E9;
+            border-radius: 10px;
+        }
+        @keyframes confetti-fall {
+            to { transform: translateY(100vh) rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -254,13 +300,14 @@
             <div class="digestive-animation" id="digestiveAnimation">
                 <div class="food" id="foodItem"></div>
                 <div class="pancreas-icon" id="pancreasIcon"></div>
-                <div class="animation-label" style="position:absolute; bottom:15px; left:15px; font-size:14px; color:#333; background:rgba(255,255,255,0.9); padding:5px 10px; border-radius:20px; border: 2px dashed #4CAF50;">
+                <div class="animation-label" style="bottom:15px; left:15px; border: 2px dashed #4CAF50;">
                     👆 Drag me through your tummy!
                 </div>
-                <div class="animation-label" style="position:absolute; bottom:120px; right:15%; font-size:14px; color:#333; background:rgba(255,255,255,0.9); padding:5px 10px; border-radius:20px; border: 2px dashed #FF9800; animation: wiggle 2s infinite;">
+                <div class="animation-label" style="bottom:120px; right:15%; border: 2px dashed #FF9800; animation: wiggle 2s infinite;">
                     🎯 Click me to make juices!
                 </div>
             </div>
+            
             <h2>The Pancreas Superpower</h2>
             <p>The pancreas has another important job - it helps control your blood sugar!</p>
             
@@ -310,35 +357,6 @@
                 }
             }
         </script>
-        <style>
-            @keyframes confetti-fall {
-                to { transform: translateY(100vh) rotate(360deg); }
-            }
-            .happy-button {
-                background: #4CAF50;
-                color: white;
-                border: none;
-                padding: 12px 20px;
-                border-radius: 30px;
-                font-family: inherit;
-                font-size: 16px;
-                cursor: pointer;
-                margin-top: 15px;
-                transition: all 0.3s;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            }
-            .happy-button:hover {
-                transform: scale(1.05);
-                box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-            }
-            .fun-reminder {
-                text-align: center;
-                margin-top: 30px;
-                padding: 20px;
-                background: #E8F5E9;
-                border-radius: 10px;
-            }
-        </style>
         </div>
     </div>
     
@@ -362,27 +380,30 @@
                 foodItem.style.animationPlayState = 'paused';
                 const rect = foodItem.getBoundingClientRect();
                 
-                if (e.type === 'mousedown') {
-                    offsetX = e.clientX - rect.left;
-                    offsetY = e.clientY - rect.top;
-                } else if (e.type === 'touchstart') {
-                    offsetX = e.touches[0].clientX - rect.left;
-                    offsetY = e.touches[0].clientY - rect.top;
+                // Determine if it's a touch event or mouse event
+                const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+                const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+
+                offsetX = clientX - rect.left;
+                offsetY = clientY - rect.top;
+
+                // Prevent default touch behavior (like scrolling)
+                if (e.type === 'touchstart') {
+                    e.preventDefault();
                 }
             }
             
             function drag(e) {
                 if (!isDragging) return;
-                e.preventDefault();
+                e.preventDefault(); // Prevent default behavior for both mouse and touch
                 
                 const rect = digestiveAnimation.getBoundingClientRect();
                 let x;
                 
-                if (e.type === 'mousemove') {
-                    x = e.clientX - rect.left - offsetX;
-                } else if (e.type === 'touchmove') {
-                    x = e.touches[0].clientX - rect.left - offsetX;
-                }
+                // Determine if it's a touch event or mouse event
+                const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+                
+                x = clientX - rect.left - offsetX;
                 
                 if (x > 20 && x < rect.width - 50) {
                     foodItem.style.left = x + 'px';
